@@ -17,7 +17,6 @@ const QuoteMachine = ({assignNewQuoteIndex, selectedQuote}) => {
             id="tweet-quote">
                 <button>
                     <FontAwesomeIcon icon={faTwitter}/>
-                    fock
                 </button>
             </a>
         </>
