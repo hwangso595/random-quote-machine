@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import QuoteMachine from './components/QuoteMachine';
 
-function App() {
+const App = props => {
+  const [quotes, updateQuotes] = useState([]);
+  const [selectedQuoteIndex, setSelectedQuoteIndex] = useState(null);
+  
+
+  useEffect(() => {
+      async function fetchData() {
+        const data = await fetch('https://gist.githubusercontent.com/natebass/b0a548425a73bdf8ea5c618149fe1fce/raw/f4231cd5961f026264bb6bb3a6c41671b044f1f4/quotes.json');
+        const quotes = await data.json();
+        await updateQuotes(quotes);
+        //setSelectedQuoteIndex(Math.floor(Math.random()*(quotes.length)));
+        setSelectedQuoteIndex(Math.floor(Math.random()*(quotes.length)));
+        console.log("GOT QUOTE");
+      }
+      fetchData();
+      
+  }, []);
+
+  const getSelectedQuote = () => {
+    if (!quotes.length || !Number.isInteger(selectedQuoteIndex)) {
+      return undefined;
+    }
+    return quotes[selectedQuoteIndex];
+  }
+
+  const assignNewQuoteIndex = () => {
+    if(!quotes.length) 
+      return;
+    let rand = Math.floor(Math.random()*(quotes.length));
+    while(rand === selectedQuoteIndex) {
+      rand = Math.floor(Math.random()*(quotes.length));
+    }
+    setSelectedQuoteIndex(rand);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <div className="App" id="quote-box">
+    {
+      getSelectedQuote()? 
+      <QuoteMachine selectedQuote={getSelectedQuote()} assignNewQuoteIndex={assignNewQuoteIndex}/>: null
+    }
+    
+  </div>
   );
 }
-
-export default App;
+export default React.memo(App, () => {
+  return true;
+});
