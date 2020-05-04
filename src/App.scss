@@ -1,4 +1,5 @@
 $transition-speed: 700ms;
+$default-bg-color: #ff7f6b;
 
 html, body, #root {
   float: left;
@@ -9,7 +10,6 @@ html, body, #root {
   text-align: center;
   margin: 0;
   padding: 0;
-  color: white;
 }
 
 #root {
@@ -18,6 +18,8 @@ html, body, #root {
 }
 
 #quote-box {
+  background-color: $default-bg-color;
+  color:white;
   position: relative;
   bottom: 10rem;
   display: flex;
@@ -48,7 +50,6 @@ html, body, #root {
   padding-bottom: 0;
   margin: 2rem 2rem;
   font-size: 3rem;
-  
 }
 
 #author {
@@ -67,6 +68,7 @@ html, body, #root {
 }
 
 button {
+  background-color: $default-bg-color;
   filter: brightness(0.9);
   border: none;
   border-radius: 0.5rem;
